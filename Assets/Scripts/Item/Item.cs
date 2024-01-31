@@ -6,4 +6,6 @@ public class Item : MonoBehaviour
 {
     private string itemName;
     private float itemScore;
+
+
 }

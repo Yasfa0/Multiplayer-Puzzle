@@ -23,18 +23,26 @@ public class ScoreManager : MonoBehaviour
 
     public float CalculateScore()
     {
-        float tempScore = 0;
-        foreach (PlacementSlot slot in placementSlots) 
+        if (placementSlots.Count > 0)
         {
-            if (slot.GetOccupied())
+            float tempScore = 0;
+            foreach (PlacementSlot slot in placementSlots)
             {
-                tempScore += slot.GetScore();
+                if (slot.GetOccupied())
+                {
+                    tempScore += slot.GetScore();
+                }
             }
-        }
 
-        scoreText.text = "SCORE: " + tempScore;
-        currentScore = tempScore;
-        return tempScore;
+            scoreText.text = "SCORE: " + tempScore;
+            currentScore = tempScore;
+            return tempScore;
+        }
+        else
+        {
+            return 0;
+        }
     }
+       
 
 }

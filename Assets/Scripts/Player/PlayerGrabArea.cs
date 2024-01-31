@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerGrabArea : MonoBehaviour
+public class PlayerGrabArea : NetworkBehaviour
 {
     private GameObject inGrabArea = null;
 

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     private GameObject currentItem;
     List<GameObject> captureFollow = new List<GameObject>();
@@ -30,112 +31,113 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-            horizontalInput = Input.GetAxisRaw("Horizontal");
-            verticalInput = Input.GetAxisRaw("Vertical");
-            moveDir = new Vector3(horizontalInput, 0, verticalInput).normalized;
+        if (IsOwner)
+        {
+            MovementControl();
+        }
+        
+    }
 
-            transform.position = new Vector3(transform.position.x, 1, transform.position.z);
+    public void MovementControl()
+    {
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+        moveDir = new Vector3(horizontalInput, 0, verticalInput).normalized;
 
-            if (moveDir.magnitude == 0)
+        transform.position = new Vector3(transform.position.x, 1, transform.position.z);
+
+        if (moveDir.magnitude == 0)
+        {
+            //Debug.Log("Player Idling");
+            //anim.SetInteger("animState", 0);
+            if (Time.time - lastIdle >= tickDuration)
             {
-                //Debug.Log("Player Idling");
-                //anim.SetInteger("animState", 0);
-                if (Time.time - lastIdle >= tickDuration)
-                {
-                    //Debug.Log("Idling Heal");
-                    lastIdle = Time.time;
-                }
+                //Debug.Log("Idling Heal");
+                lastIdle = Time.time;
             }
-            else
-            {
-                //anim.SetInteger("animState", 1);
-                //idleSetup = false;
-                //Debug.Log("Player not Idling");
-            }
+        }
+        else
+        {
+            //anim.SetInteger("animState", 1);
+            //idleSetup = false;
+            //Debug.Log("Player not Idling");
+        }
 
-            if (moveDir.magnitude >= 0.1f)
-            {
-                //if (!playerWeapon.GetIsAiming())
-                //{
-                    float targetAngle = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg;
-                    float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmooth, 0.1f);
-                    transform.rotation = Quaternion.Euler(transform.rotation.x, smoothAngle, transform.rotation.z);
-                //}
+        if (moveDir.magnitude >= 0.1f)
+        {
+            //if (!playerWeapon.GetIsAiming())
+            //{
+            float targetAngle = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg;
+            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmooth, 0.1f);
+            transform.rotation = Quaternion.Euler(transform.rotation.x, smoothAngle, transform.rotation.z);
+            //}
 
 
-                //transform.Translate(moveDir * speed * Time.deltaTime);
-                //rb.velocity = moveDir * speed * Time.deltaTime;
-                charaController.Move(moveDir * speed * Time.deltaTime);
-            }
+            //transform.Translate(moveDir * speed * Time.deltaTime);
+            //rb.velocity = moveDir * speed * Time.deltaTime;
+            charaController.Move(moveDir * speed * Time.deltaTime);
+        }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
 
-            if (currentItem != null)
-            {
-                //Currently holding item, if pressed, drop off.
-                currentItem.gameObject.transform.parent = null;
-                currentItem = null;
-            }
-            else
-            {
-                //Not holding item, if pressed, pick up
-                //RaycastHit[] hits =  Physics.RaycastAll(gameObject.transform.position, gameObject.transform.forward, 5f);
-
-                
-                //RaycastHit[] hits = Physics.SphereCastAll(gameObject.transform.position, 0.5f, gameObject.transform.forward);
-                //List<GameObject> validItems = new List<GameObject>();
-
-                //Debug.Log("Hits Length: " + hits.Length);
-
-                //foreach (RaycastHit item in hits)
-                //{
-                 //   Debug.Log(item.transform.gameObject.name);
-                //}
-
-                //for (int i = 0; i < hits.Length; i++)
-                //{
-                  //  if (hits[i].transform.gameObject.tag == "Item")
-                   // {
-                     //   validItems.Add(hits[i].transform.gameObject);
-                    //}
-                    //i++;
-                //}
-
-                //float closestDistance = Mathf.Infinity;
-                //GameObject closestItem = null;
-
-                //for (int i = 0; i < validItems.Count; i++)
-                //{
-                  //  float magDistance = Vector3.Magnitude(validItems[i].transform.position - gameObject.transform.position);
-                    //if (magDistance < closestDistance)
-                    //{
-                      //  closestDistance = magDistance;
-                       // closestItem = validItems[i];
-                    //}
-                    //i++;
-                //}
-
-                //if (closestItem != null)
-                //{
-                 //   closestItem.transform.position = front.transform.position;
-                 //   closestItem.transform.parent = front.transform.parent;
-                 //   currentItem = closestItem;
-                //}
-
-                if(grabArea.GetInGrabArea() != null)
-                {
-                    GameObject tempItem = grabArea.GetInGrabArea();
-                    currentItem = tempItem;
-                    currentItem.transform.position = front.transform.position;
-                    currentItem.transform.parent = front.transform.parent;
-                }
-            }
-
-            
-
+            Debug.Log("E Pressed");
+            GrabNDropSeverAuth();
         }
-        
+    }
+
+    public void GrabNDropSeverAuth()
+    {
+        GrabNDropServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void GrabNDropServerRpc()
+    {
+        if (currentItem != null)
+        {
+            Debug.Log("Dropping");
+            //Currently holding item, if pressed, drop off.
+            currentItem.gameObject.transform.parent = null;
+            currentItem = null;
+        }
+        else
+        {
+            Debug.Log("Grabbing");
+            //Not holding item, if pressed, pick up
+            if (grabArea.GetInGrabArea() != null)
+            {
+                GameObject tempItem = grabArea.GetInGrabArea();
+                currentItem = tempItem;
+                currentItem.transform.position = front.transform.position;
+                currentItem.transform.parent = transform;
+            }
+        }
+    }
+
+
+    public void GrabNDrop()
+    {
+
+        if (currentItem != null)
+        {
+            Debug.Log("Dropping");
+            //Currently holding item, if pressed, drop off.
+            currentItem.gameObject.transform.parent = null;
+            currentItem = null;
+        }
+        else
+        {
+            Debug.Log("Grabbing");
+            //Not holding item, if pressed, pick up
+            if (grabArea.GetInGrabArea() != null)
+            {
+                GameObject tempItem = grabArea.GetInGrabArea();
+                currentItem = tempItem;
+                currentItem.transform.position = front.transform.position;
+                currentItem.transform.parent = transform;
+            }
+        }
     }
 
     public void AdjustSpeed(float val)
