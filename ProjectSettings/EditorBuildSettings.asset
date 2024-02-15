@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Dummies/CraneScene.unity
+    guid: ebd4aa8fefcbcbd46a119853ec06d85f
+  - enabled: 1
     path: Assets/Scenes/Dummies/BaseScene.unity
     guid: a1f05017cf1046042907ea840b63e89c
   - enabled: 1

@@ -76,55 +76,68 @@ public class LobbyManager : NetworkBehaviour
     {
         LobbyUpdatePoll();
         LobbyHeartbeat();
-
-
     }
 
     //Heartbeat & Poll
     private async void LobbyUpdatePoll()
     {
-        if (joinedLobby != null)
+
+        try
         {
-            lobbyPollTimer -= Time.deltaTime;
-            if (lobbyPollTimer < 0)
+            if (joinedLobby != null)
             {
-                lobbyPollTimer = 1.1f;
-
-                Lobby lobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
-                joinedLobby = lobby;
-
-                if (insideARoom)
+                lobbyPollTimer -= Time.deltaTime;
+                if (lobbyPollTimer < 0)
                 {
-                    PrintPlayers(joinedLobby);
-                }
-                if(!insideARoom)
-                {
-                    ListRooms();
-                }
+                    lobbyPollTimer = 1.1f;
 
-                if (joinedLobby.Data["RelayCode"].Value != "0")
-                {
-                    if (!IsHost)
+                    Lobby lobby = await LobbyService.Instance.GetLobbyAsync(joinedLobby.Id);
+                    joinedLobby = lobby;
+
+                    if (insideARoom)
                     {
-                        TestRelay.Instance.JoinRelay(joinedLobby.Data["RelayCode"].Value);
-                        gameObject.SetActive(false);
+                        PrintPlayers(joinedLobby);
+                    }
+                    if (!insideARoom)
+                    {
+                        //ListRooms();
+                    }
+
+                    if (joinedLobby.Data["RelayCode"].Value != "0")
+                    {
+                        if (!IsHost)
+                        {
+                            TestRelay.Instance.JoinRelay(joinedLobby.Data["RelayCode"].Value);
+                            gameObject.SetActive(false);
+                        }
                     }
                 }
             }
+        }
+        catch(LobbyServiceException e)
+        {
+            Debug.Log(e);
         }
     }
 
     private async void LobbyHeartbeat()
     {
-        if (hostLobby != null)
+        try
         {
-            lobbyHeartbeat -= Time.deltaTime;
-            if (lobbyHeartbeat < 0)
+            if (hostLobby != null)
             {
-                lobbyHeartbeat = 15;
+                lobbyHeartbeat -= Time.deltaTime;
+                if (lobbyHeartbeat < 0)
+                {
+                    lobbyHeartbeat = 15;
 
-                await LobbyService.Instance.SendHeartbeatPingAsync(hostLobby.Id);
+                    await LobbyService.Instance.SendHeartbeatPingAsync(hostLobby.Id);
+                }
             }
+        }
+        catch(LobbyServiceException e) 
+        {
+            Debug.Log(e);
         }
     }
 
@@ -297,6 +310,22 @@ public class LobbyManager : NetworkBehaviour
             joinedLobby = lobby;
             gameObject.SetActive(false);
 
+        }
+        catch (LobbyServiceException e)
+        {
+            Debug.Log(e);
+        }
+    }
+
+    //Leave Room
+    public async void LeaveLobby()
+    {
+        try
+        {
+            await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, AuthenticationService.Instance.PlayerId);
+            lobbyPanel.SetActive(true);
+            joinedPanel.SetActive(false);
+            insideARoom = false;
         }
         catch (LobbyServiceException e)
         {
