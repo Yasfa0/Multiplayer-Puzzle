@@ -22,7 +22,7 @@ public class CranePlacementSystem : MonoBehaviour
         //Debug.Log("Crane Pos: " + cranePos);
         //craneIndicator.transform.position = cranePos;
         lastIndicatorPos = grid.CellToWorld(indicatorPos);
-        lastIndicatorPos.y = 0;
+        lastIndicatorPos.y = 1;
         craneIndicator.transform.position = lastIndicatorPos;
     }
 

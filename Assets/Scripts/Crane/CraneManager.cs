@@ -45,8 +45,12 @@ public class CraneManager : MonoBehaviour
 
     public void PlaceBlock()
     {
-        currentBlock.transform.parent = null;
-        currentBlock.transform.position = placementSystem.GetLastIndicatorPos();
-        currentBlock = null;
+        if (currentBlock != null)
+        {
+            currentBlock.transform.parent = null;
+            currentBlock.transform.position = placementSystem.GetLastIndicatorPos();
+            currentBlock = null;
+
+        }
     }
 }

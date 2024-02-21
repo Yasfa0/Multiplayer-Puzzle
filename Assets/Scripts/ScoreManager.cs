@@ -5,15 +5,24 @@ using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
+
+    public static ScoreManager Instance;
+
     private float currentScore = 0;
     List<PlacementSlot> placementSlots = new List<PlacementSlot>();
     [SerializeField] private TextMeshProUGUI scoreText;
 
     private void Awake()
     {
-        foreach (PlacementSlot slot in FindObjectsOfType<PlacementSlot>()) {
-            placementSlots.Add(slot);
+        if(Instance == null)
+        {
+            Instance = this;
+        }else if(Instance != null)
+        {
+            Destroy(this);
         }
+
+        RefreshPlacementSlots();
     }
 
     private void Update()
@@ -23,8 +32,10 @@ public class ScoreManager : MonoBehaviour
 
     public float CalculateScore()
     {
+        Debug.Log("UPDATE");
         if (placementSlots.Count > 0)
         {
+            Debug.Log("CALCULATING SCORE");
             float tempScore = 0;
             foreach (PlacementSlot slot in placementSlots)
             {
@@ -41,6 +52,15 @@ public class ScoreManager : MonoBehaviour
         else
         {
             return 0;
+        }
+    }
+
+    public void RefreshPlacementSlots()
+    {
+        placementSlots.Clear();
+        foreach (PlacementSlot slot in FindObjectsOfType<PlacementSlot>())
+        {
+            placementSlots.Add(slot);
         }
     }
        
