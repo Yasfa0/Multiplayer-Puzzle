@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4089519860592137545}
   - component: {fileID: 4724647205971423424}
   - component: {fileID: 3329561396901007979}
+  - component: {fileID: 6518939641882838164}
   m_Layer: 0
   m_Name: BB_Long
   m_TagString: Building Block
@@ -146,3 +147,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &6518939641882838164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047428167322424684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a0dd793c568b4c4c94254ad77072d52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomType: 1

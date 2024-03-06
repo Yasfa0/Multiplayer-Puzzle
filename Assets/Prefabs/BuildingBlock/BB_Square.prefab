@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7527109013796178072}
   - component: {fileID: 6100574562002167597}
   - component: {fileID: 665868451767090751}
+  - component: {fileID: 1101441950860019793}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Building Block
@@ -133,6 +134,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1101441950860019793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051935025280493782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a0dd793c568b4c4c94254ad77072d52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomType: 2
 --- !u!1 &3612956945468135502
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,6 +160,7 @@ GameObject:
   - component: {fileID: 173559793025576980}
   - component: {fileID: 5261906767846340892}
   - component: {fileID: 2175784500296282532}
+  - component: {fileID: 2495005029340450950}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Building Block
@@ -266,6 +281,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2495005029340450950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3612956945468135502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a0dd793c568b4c4c94254ad77072d52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomType: 2
 --- !u!1 &6991411566451335971
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,6 +307,7 @@ GameObject:
   - component: {fileID: 6257355868169976161}
   - component: {fileID: 3899831020646858060}
   - component: {fileID: 5805101024136772162}
+  - component: {fileID: 7599033505255074109}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Building Block
@@ -399,6 +428,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7599033505255074109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6991411566451335971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a0dd793c568b4c4c94254ad77072d52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomType: 2
 --- !u!1 &7687678313061323479
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,6 +453,7 @@ GameObject:
   - component: {fileID: 8874268306910896536}
   - component: {fileID: 3941065644201113417}
   - component: {fileID: 7559729471706313698}
+  - component: {fileID: 8098339555445704140}
   m_Layer: 0
   m_Name: BB_Square
   m_TagString: Building Block
@@ -478,6 +521,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 12, y: 2, z: 12}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8098339555445704140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7687678313061323479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a0dd793c568b4c4c94254ad77072d52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomType: 2
 --- !u!1 &8343422591633063629
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,6 +547,7 @@ GameObject:
   - component: {fileID: 4663795776591085434}
   - component: {fileID: 3201622818781275169}
   - component: {fileID: 8555803016379515980}
+  - component: {fileID: 2092471576992775565}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Building Block
@@ -611,3 +668,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2092471576992775565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8343422591633063629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a0dd793c568b4c4c94254ad77072d52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomType: 2

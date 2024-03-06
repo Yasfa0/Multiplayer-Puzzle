@@ -4,11 +4,24 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
+    public static StageManager Instance;
+
     //[SerializeField] GameObject placementSlotParent;
     [SerializeField] GameObject gridMat;
     [SerializeField] List<GameObject> itemPlacements = new List<GameObject>();
     [SerializeField] List<GameObject> players = new List<GameObject>();
     [SerializeField] List<GameObject> CraneControls = new List<GameObject>();
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }else if (Instance != null)
+        {
+            Destroy(this);
+        }
+    }
 
     private void Start()
     {
@@ -17,10 +30,10 @@ public class StageManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha7))
+        /*if (Input.GetKeyDown(KeyCode.Alpha7))
         {
             ChangeMode(false);
-        }
+        }*/
     }
 
     public void ChangeMode(bool modeBool)

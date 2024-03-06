@@ -4,30 +4,33 @@ using UnityEngine;
 
 public class PlacementSlot : MonoBehaviour
 {
-    Rigidbody rb;
-    [SerializeField] private float score = 50;
-    private bool isOccupied = false;
-    private bool meshVisibility = true;
-    private MeshRenderer meshRenderer;
+    protected Rigidbody rb;
+    [SerializeField] protected string targetTag = "Item";
+    [SerializeField] protected float score = 50;
+    protected bool isOccupied = false;
+    protected bool meshVisibility = true;
+    protected MeshRenderer meshRenderer;
 
-    private void Awake()
+    [SerializeField] private FurnitureType furnitureType;
+
+    protected void Awake()
     {
         meshRenderer = GetComponent<MeshRenderer>();  
         rb = GetComponent<Rigidbody>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    virtual protected void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Item")
+        if(other.GetComponent<FurnitureClass>() && other.GetComponent<FurnitureClass>().GetFurnitureType() == furnitureType)
         {
             isOccupied = true;
             Debug.Log("Slot is occupied");
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    virtual protected void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Item")
+        if (other.GetComponent<FurnitureClass>() && other.GetComponent<FurnitureClass>().GetFurnitureType() == furnitureType)
         {
             isOccupied = false;
             Debug.Log("Slot is unoccupied");

@@ -53,4 +53,9 @@ public class CraneManager : MonoBehaviour
 
         }
     }
+
+    public GameObject GetCurrentBlock()
+    {
+        return currentBlock;
+    }
 }
