@@ -10,7 +10,8 @@ public class RoomClass : MonoBehaviour
     public RoomType GetRoomType() { return roomType; }
 
 }
+
 public enum RoomType
 {
-    Basic, Long, Square
+    Basic, Long, Square, TypeOne, TypeTwo, TypeThree
 }

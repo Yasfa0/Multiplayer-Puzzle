@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class PlayerGrabArea : NetworkBehaviour
+public class PlayerGrabArea : MonoBehaviour
 {
     private GameObject inGrabArea = null;
 

@@ -8,8 +8,11 @@ public class RoomPlacementSlot : PlacementSlot
 
     protected override void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<RoomClass>() && other.GetComponent<RoomClass>().GetRoomType() == targetRoomType)
+        if (other.GetComponent<RoomClass>() && (int)other.GetComponent<RoomClass>().GetRoomType() == (int)targetRoomType)
+        //if (other.GetComponent<RoomClass>())
         {
+            Debug.Log("Other Room Type : " +  (int)other.GetComponent<RoomClass>().GetRoomType());
+            Debug.Log("Placement Room Type : " + (int)targetRoomType);
             isOccupied = true;
             Debug.Log("Slot is occupied");
         }
@@ -17,8 +20,11 @@ public class RoomPlacementSlot : PlacementSlot
 
     protected override void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<RoomClass>() && other.GetComponent<RoomClass>().GetRoomType() == targetRoomType)
+        if (other.GetComponent<RoomClass>() && (int)other.GetComponent<RoomClass>().GetRoomType() == (int)targetRoomType)
+        //if (other.GetComponent<RoomClass>())
         {
+            Debug.Log("Other Room type : " + (int)other.GetComponent<RoomClass>().GetRoomType());
+            Debug.Log("Other Room type : " + (int)targetRoomType);
             isOccupied = false;
             Debug.Log("Slot is unoccupied");
         }

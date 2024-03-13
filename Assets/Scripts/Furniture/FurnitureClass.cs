@@ -14,5 +14,5 @@ public class FurnitureClass : MonoBehaviour
 
 public enum FurnitureType
 {
-    Box, Long
+    Box, Long, Kasur, Meja, Kursi, Kulkas, Galon, Microwave
 }

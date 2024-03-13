@@ -8,9 +8,14 @@ public class StageManager : MonoBehaviour
 
     //[SerializeField] GameObject placementSlotParent;
     [SerializeField] GameObject gridMat;
-    [SerializeField] List<GameObject> itemPlacements = new List<GameObject>();
+    //[SerializeField] List<GameObject> itemPlacements = new List<GameObject>();
     [SerializeField] List<GameObject> players = new List<GameObject>();
     [SerializeField] List<GameObject> CraneControls = new List<GameObject>();
+
+    [SerializeField] GameObject deleteGroup;
+    [SerializeField] GameObject deleteBoxPrefab;
+
+    bool currentMode = true;
 
     private void Awake()
     {
@@ -25,15 +30,15 @@ public class StageManager : MonoBehaviour
 
     private void Start()
     {
-        ChangeMode(true);
+        ChangeMode(currentMode);
     }
 
     private void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.Alpha7))
+        if (Input.GetKeyDown(KeyCode.M))
         {
-            ChangeMode(false);
-        }*/
+            ChangeMode(currentMode);
+        }
     }
 
     public void ChangeMode(bool modeBool)
@@ -41,9 +46,9 @@ public class StageManager : MonoBehaviour
         //placementSlotParent.SetActive(!modeBool);
         gridMat.SetActive(modeBool);
 
-        foreach (GameObject item in itemPlacements) { 
+        /*foreach (GameObject item in itemPlacements) { 
             item.SetActive(!modeBool);
-        }
+        }*/
 
         foreach (GameObject player in players)
         {
@@ -55,7 +60,15 @@ public class StageManager : MonoBehaviour
             crane.SetActive(modeBool);
         }
 
+        currentMode = !currentMode;
         ScoreManager.Instance.RefreshPlacementSlots();
+    }
+
+    public void AddDeleteBox(GameObject targetRoom)
+    {
+        GameObject temp = Instantiate(deleteBoxPrefab, deleteGroup.transform);
+        temp.transform.SetParent(deleteGroup.transform,false);
+        temp.GetComponent<PlacedRoomBox>().SetData(targetRoom,targetRoom.name);
     }
 
 }

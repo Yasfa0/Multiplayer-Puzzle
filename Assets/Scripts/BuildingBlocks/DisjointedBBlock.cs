@@ -6,10 +6,11 @@ public class DisjointedBBlock : BuildingBlock
 {
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Ground")
+        if(other.gameObject.CompareTag("Ground"))
         {
             Debug.Log("Block collide with Ground");
             CraneManager.instance.PlaceBlock();
+            AddDeleteBox();
         }
     }
 
@@ -17,5 +18,6 @@ public class DisjointedBBlock : BuildingBlock
     {
         Debug.Log("Block collide with Ground");
         CraneManager.instance.PlaceBlock();
+        AddDeleteBox();
     }
 }
