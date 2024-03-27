@@ -13,5 +13,6 @@ public class RoomClass : MonoBehaviour
 
 public enum RoomType
 {
-    Basic, Long, Square, TypeOne, TypeTwo, TypeThree
+    Basic, Long, Square, TypeOne, TypeTwo, TypeThree, TypeFour, TypeFive, TypeSix, TypeSeven, TypeEight,
+    TypeNine, TypeTen
 }

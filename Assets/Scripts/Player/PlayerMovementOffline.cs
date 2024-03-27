@@ -60,11 +60,12 @@ public class PlayerMovementOffline : MonoBehaviour
             playerVelocity.y = 0;
         }
 
-        if (isGrounded &&  Input.GetKey(jumpKey))
+        //Still buggy
+        /*if (isGrounded &&  Input.GetKey(jumpKey))
         {
             playerVelocity.y = Mathf.Sqrt(5f * -3f * gravityValue);
            //rb.velocity = Vector3.up * 100f;
-        }
+        }*/
 
         playerVelocity.y += gravityValue * Time.deltaTime;
 
@@ -146,6 +147,7 @@ public class PlayerMovementOffline : MonoBehaviour
         if (currentItem != null)
         {
             anim.SetBool("isGrabbing", false);
+            StartCoroutine(WaitMove(2f));
             Debug.Log("Dropping");
             //Currently holding item, if pressed, drop off.
             currentItem.gameObject.transform.parent = null;
@@ -153,12 +155,12 @@ public class PlayerMovementOffline : MonoBehaviour
         }
         else
         {
-            anim.SetBool("isGrabbing", true);
-            StartCoroutine(WaitMove(2f));
-            Debug.Log("Grabbing");
             //Not holding item, if pressed, pick up
             if (grabArea.GetInGrabArea() != null)
             {
+                anim.SetBool("isGrabbing", true);
+                StartCoroutine(WaitMove(2f));
+                Debug.Log("Grabbing");
                 GameObject tempItem = grabArea.GetInGrabArea();
                 currentItem = tempItem;
                 currentItem.transform.position = front.transform.position;

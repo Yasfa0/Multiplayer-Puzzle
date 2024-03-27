@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RoomPlacementSlot : PlacementSlot
@@ -12,6 +13,18 @@ public class RoomPlacementSlot : PlacementSlot
         //if (other.GetComponent<RoomClass>())
         {
             Debug.Log("Other Room Type : " +  (int)other.GetComponent<RoomClass>().GetRoomType());
+            Debug.Log("Placement Room Type : " + (int)targetRoomType);
+            isOccupied = true;
+            Debug.Log("Slot is occupied");
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.GetComponent<RoomClass>() && (int)other.GetComponent<RoomClass>().GetRoomType() == (int)targetRoomType)
+        //if (other.GetComponent<RoomClass>())
+        {
+            Debug.Log("Other Room Type : " + (int)other.GetComponent<RoomClass>().GetRoomType());
             Debug.Log("Placement Room Type : " + (int)targetRoomType);
             isOccupied = true;
             Debug.Log("Slot is occupied");
